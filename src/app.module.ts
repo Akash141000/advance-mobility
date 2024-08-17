@@ -18,10 +18,10 @@ import { VehicleModel } from './vehicle/vehicle.model';
       username: 'akash',
       password: 'postgres',
       database: 'advance-mobility',
-      synchronize: false,
-      autoLoadEntities: true,
+      synchronize: false, // run only first time else it will messup
       entities: [DriverModel, VehicleModel],
     }),
+    TypeOrmModule.forFeature([DriverModel, VehicleModel]),
   ],
   controllers: [AppController, DriverController, VehicleController],
   providers: [AppService, DriverService, VehicleService],
