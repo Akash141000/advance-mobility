@@ -1,10 +1,10 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { TransferModel } from 'src/transfer/transfer.model';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('driver')
 export class DriverModel {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn({ name: 'driver_id' })
+  driverId: number;
 
   @Column()
   name: string;
@@ -14,4 +14,8 @@ export class DriverModel {
 
   @Column()
   profilePhoto: string;
+
+  //foregin key setup
+  @OneToMany(() => TransferModel, (transfer) => transfer.driverId)
+  transfers: TransferModel[];
 }

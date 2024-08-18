@@ -6,7 +6,17 @@ import { DriverModel } from './driver.model';
 
 @Controller('/driver')
 export class DriverController {
-  constructor(private readonly driverServie: DriverService) {}
+  constructor(private readonly driverService: DriverService) {}
+
+  @ApiResponse({
+    status: 200,
+    description: 'get all drivers',
+    type: Array<DriverDTO>,
+  })
+  @Get('/get')
+  getDrivers() {
+    return this.driverService.getDrivers();
+  }
 
   @ApiResponse({
     status: 200,
@@ -15,7 +25,7 @@ export class DriverController {
   })
   @Get('/get/:id')
   getDriver(@Query('id') id: number) {
-    return this.driverServie.getDriver(id);
+    return this.driverService.getDriver(id);
   }
 
   @ApiResponse({
@@ -25,6 +35,6 @@ export class DriverController {
   })
   @Post('/add')
   addDriver(@Body() body: DriverDTO) {
-    return this.driverServie.addDriver(body);
+    return this.driverService.addDriver(body);
   }
 }

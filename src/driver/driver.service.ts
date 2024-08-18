@@ -10,13 +10,17 @@ export class DriverService {
     @InjectRepository(DriverModel) private DriverRepo: Repository<DriverModel>,
   ) {}
 
-  async getDriver(id: number) {
-    return this.DriverRepo.findOneBy({ id: id });
+  async getDrivers() {
+    return this.DriverRepo.find({ take: 10 });
+  }
+
+  async getDriver(driverId: number) {
+    return this.DriverRepo.findOneBy({ driverId });
   }
 
   async addDriver(driverData: DriverDTO) {
     try {
-      const driver = await this.DriverRepo.insert(driverData);
+      const driver = await this.DriverRepo.save(driverData);
       return driver;
     } catch (err) {
       return err;

@@ -1,22 +1,48 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsString, Length, Max, Min } from 'class-validator';
+import {
+  IsEnum,
+  IsString,
+  Matches,
+  Max,
+  MaxLength,
+  Min,
+  MinLength,
+} from 'class-validator';
+
+export enum VehicleType {
+  CAR = 'car',
+  BIKE = 'bike',
+  TRUCK = 'truck',
+  VAN = 'van',
+}
 
 export class VehicleDTO {
-  //can use custom validator here,
-  @IsString({ message: 'vehicle number can contain only alphabets' })
-  @Length(4)
-  @ApiProperty({ default: 'MH431234' })
+  @Matches(/^[A-Z]{2}\d{4}$/, {
+    message:
+      'Vehicle number must be in the format of two uppercase letters followed by four digits.',
+  })
+  @ApiProperty({ default: 'MH4311', required: true })
   vehicleNumber: string;
 
-  @IsInt({ message: 'phone number can contain only number' })
-  @Min(10, { message: 'phone number should be min 10 number' })
-  @Max(10, { message: 'phone number can be max 10 number' })
-  @ApiProperty({ default: 'car' })
-  vechicleType: number;
+  @IsString({ message: 'Vehicle type can contain only characters' })
+  @MinLength(3, {
+    message: 'Vehicle type should be at least 3 characters long',
+  })
+  @MaxLength(10, { message: 'Vehicle type can be at most 10 characters long' })
+  @IsEnum(VehicleType, {
+    message: 'Vehicle type must be one of the predefined types.',
+  })
+  @ApiProperty({
+    example: 'car',
+    description: 'Type of the vehicle.',
+    enum: VehicleType,
+    required: true,
+  })
+  vehicleType: VehicleType;
 
-  @ApiProperty({ default: '' })
+  @ApiProperty({ default: 'puc' })
   pucCertificate: string;
 
-  @ApiProperty({ default: '' })
+  @ApiProperty({ default: 'insurance' })
   insuranceCertificate: string;
 }

@@ -9,6 +9,16 @@ export class VehicleController {
 
   @ApiResponse({
     status: 200,
+    description: 'get all vehicles',
+    type: Array<VehicleDTO>,
+  })
+  @Get('/get')
+  getVehicles() {
+    return this.vehicleService.getVehicles();
+  }
+
+  @ApiResponse({
+    status: 200,
     description: 'get vehicle information using id',
     type: VehicleDTO,
   })

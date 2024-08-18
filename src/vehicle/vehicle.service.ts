@@ -11,8 +11,13 @@ export class VehicleService {
     private VehicleRepo: Repository<VehicleModel>,
   ) {}
 
-  async getVehicle(id: number) {
-    const vehicle = await this.VehicleRepo.findOneBy({ id: id });
+  async getVehicles() {
+    const vehicles = await this.VehicleRepo.find({ take: 10 });
+    return vehicles;
+  }
+
+  async getVehicle(vehicleId: number) {
+    const vehicle = await this.VehicleRepo.findOneBy({ vehicleId });
     return vehicle;
   }
 

@@ -8,6 +8,9 @@ import { VehicleService } from './vehicle/vehicle.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DriverModel } from './driver/driver.model';
 import { VehicleModel } from './vehicle/vehicle.model';
+import { TransferModel } from './transfer/transfer.model';
+import { TransferController } from './transfer/transfer.controller';
+import { TransferService } from './transfer/transfer.service';
 
 @Module({
   imports: [
@@ -18,12 +21,17 @@ import { VehicleModel } from './vehicle/vehicle.model';
       username: 'akash',
       password: 'postgres',
       database: 'advance-mobility',
-      synchronize: false, // run only first time else it will messup
-      entities: [DriverModel, VehicleModel],
+      synchronize: true, // run only first time else it will messup
+      entities: [DriverModel, VehicleModel, TransferModel],
     }),
-    TypeOrmModule.forFeature([DriverModel, VehicleModel]),
+    TypeOrmModule.forFeature([DriverModel, VehicleModel, TransferModel]),
   ],
-  controllers: [AppController, DriverController, VehicleController],
-  providers: [AppService, DriverService, VehicleService],
+  controllers: [
+    AppController,
+    DriverController,
+    VehicleController,
+    TransferController,
+  ],
+  providers: [AppService, DriverService, VehicleService, TransferService],
 })
 export class AppModule {}
