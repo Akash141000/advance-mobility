@@ -9,10 +9,10 @@ export class DriverModel {
   @Column()
   name: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, name: 'phone_number' })
   phoneNumber: number;
 
-  @Column()
+  @Column({ name: 'profile_photo' })
   profilePhoto: string;
 
   //foregin key setup

@@ -21,6 +21,6 @@ export class TransferModel {
   @JoinColumn({ name: 'driver_id' })
   driverId: number;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 }

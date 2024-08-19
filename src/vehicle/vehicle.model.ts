@@ -6,16 +6,16 @@ export class VehicleModel {
   @PrimaryGeneratedColumn({ name: 'vehicle_id' })
   vehicleId: number;
 
-  @Column({ unique: true })
+  @Column({ unique: true, name: 'vehicle_number' })
   vehicleNumber: string;
 
-  @Column()
+  @Column({ name: 'vehicle_type' })
   vehicleType: string;
 
-  @Column()
+  @Column({ name: 'puc_certificate' })
   pucCertificate: string;
 
-  @Column()
+  @Column({ name: 'insurance_certificate' })
   insuranceCertificate: string;
 
   //foregin key setup
