@@ -3,11 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DriverModel } from './driver.model';
 import { Repository } from 'typeorm';
 import { DriverDTO } from './dto/driver.dto';
+import { TransferModel } from 'src/transfer/transfer.model';
 
 @Injectable()
 export class DriverService {
   constructor(
     @InjectRepository(DriverModel) private DriverRepo: Repository<DriverModel>,
+    @InjectRepository(TransferModel)
+    private TransferRepo: Repository<TransferModel>,
   ) {}
 
   async getDrivers() {
@@ -15,7 +18,14 @@ export class DriverService {
   }
 
   async getDriver(driverId: number) {
-    return this.DriverRepo.findOneBy({ driverId });
+    const driverWithTransfers = await this.DriverRepo.createQueryBuilder(
+      'driver',
+    )
+      .where('driver.driverId = :driverId', { driverId })
+      .leftJoinAndSelect('driver.transfers', 'transfer')
+      .getOne();
+
+    return driverWithTransfers;
   }
 
   async addDriver(driverData: DriverDTO) {
