@@ -14,14 +14,15 @@ export class TransferService {
   async getTransfers() {
     return this.TransferRepo.find({
       take: 10,
-      relations: ['vehicle_id', 'driver_id'],
+      relations: ['vehicleId', 'driverId'],
     });
   }
 
+  //error handling not implemented yet
   async getTransfer(transferId: number) {
     return this.TransferRepo.findOne({
       where: { id: transferId },
-      relations: ['vehicle_id', 'driver_id'],
+      relations: ['vehicleId', 'driverId'],
     });
   }
 

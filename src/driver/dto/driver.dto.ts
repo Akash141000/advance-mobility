@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsOptional,
   IsString,
   Length,
   Matches,
@@ -21,6 +22,8 @@ export class DriverDTO {
   @Matches(/^\d+$/, { message: 'Phone number can only contain digits' })
   phoneNumber: string;
 
-  @ApiProperty({ default: '' })
+  @IsOptional()
+  // @IsBase64() // not adding since no concreate implementation // files should be handled differently
+  @ApiProperty({ default: 'somePhoto in base64 string' })
   profilePhoto: string;
 }

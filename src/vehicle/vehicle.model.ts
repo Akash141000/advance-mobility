@@ -1,6 +1,7 @@
 import { TransferModel } from 'src/transfer/transfer.model';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
+//combined index can be added for better querying
 @Entity('vehicle')
 export class VehicleModel {
   @PrimaryGeneratedColumn({ name: 'vehicle_id' })

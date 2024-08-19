@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEnum,
+  IsOptional,
   IsString,
   Matches,
   Max,
@@ -40,9 +41,11 @@ export class VehicleDTO {
   })
   vehicleType: VehicleType;
 
+  @IsOptional()
   @ApiProperty({ default: 'puc' })
   pucCertificate: string;
 
+  @IsOptional()
   @ApiProperty({ default: 'insurance' })
   insuranceCertificate: string;
 }
