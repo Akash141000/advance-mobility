@@ -1,10 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsInt,
   IsString,
-  Max,
+  Length,
+  Matches,
   MaxLength,
-  Min,
   MinLength,
 } from 'class-validator';
 
@@ -13,15 +12,14 @@ export class DriverDTO {
   @MinLength(3, {
     message: 'Driver name should be at least 3 characters long',
   })
-  @MaxLength(10, { message: 'Driver name can be at most 10 characters long' })
+  @MaxLength(30, { message: 'Driver name can be at most 10 characters long' })
   @ApiProperty({ default: 'NewDriver', required: true })
   name: string;
 
-  @IsInt({ message: 'phone number can contain only number' })
-  @Min(10, { message: 'phone number should be min 10 number' })
-  @Max(10, { message: 'phone number can be max 10 number' })
-  @ApiProperty({ default: 123456789, required: true })
-  phoneNumber: number;
+  @Length(10, 10, { message: 'phone number should be exactly 10 digits' })
+  @ApiProperty({ default: 1234567890, required: true })
+  @Matches(/^\d+$/, { message: 'Phone number can only contain digits' })
+  phoneNumber: string;
 
   @ApiProperty({ default: '' })
   profilePhoto: string;
