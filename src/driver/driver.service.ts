@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DriverModel } from './driver.model';
 import { Repository } from 'typeorm';
@@ -25,6 +25,9 @@ export class DriverService {
       .leftJoinAndSelect('driver.transfers', 'transfer')
       .getOne();
 
+    if (!driverWithTransfers) {
+      return new NotFoundException('no driver found');
+    }
     return driverWithTransfers;
   }
 

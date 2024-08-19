@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  InternalServerErrorException,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { VehicleService } from './vehicle.service';
 import { VehicleDTO } from './dto/vehicle.dto';
 import { ApiResponse } from '@nestjs/swagger';
@@ -14,7 +21,12 @@ export class VehicleController {
   })
   @Get('/get')
   getVehicles() {
-    return this.vehicleService.getVehicles();
+    try {
+      return this.vehicleService.getVehicles();
+    } catch (error) {
+      console.log('driver', '/get', error);
+      return new InternalServerErrorException('something went wrong');
+    }
   }
 
   @ApiResponse({
@@ -24,7 +36,12 @@ export class VehicleController {
   })
   @Get('/get/:id')
   getVehicle(@Query('id') id: number) {
-    return this.vehicleService.getVehicle(id);
+    try {
+      return this.vehicleService.getVehicle(id);
+    } catch (error) {
+      console.log('driver', '/get/:id', error);
+      return new InternalServerErrorException('something went wrong');
+    }
   }
 
   @ApiResponse({
@@ -34,6 +51,11 @@ export class VehicleController {
   })
   @Post('/add')
   addVehicle(@Body() body: VehicleDTO) {
-    return this.vehicleService.addVehicle(body);
+    try {
+      return this.vehicleService.addVehicle(body);
+    } catch (error) {
+      console.log('driver', '/add', error);
+      return new InternalServerErrorException('something went wrong');
+    }
   }
 }

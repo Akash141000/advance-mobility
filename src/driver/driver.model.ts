@@ -10,7 +10,7 @@ export class DriverModel {
   name: string;
 
   @Column({ unique: true, name: 'phone_number' })
-  phoneNumber: number;
+  phoneNumber: string;
 
   @Column({ name: 'profile_photo' })
   profilePhoto: string;

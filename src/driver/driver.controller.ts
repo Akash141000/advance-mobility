@@ -1,8 +1,14 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  InternalServerErrorException,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { DriverService } from './driver.service';
 import { DriverDTO } from './dto/driver.dto';
 import { ApiResponse } from '@nestjs/swagger';
-import { DriverModel } from './driver.model';
 
 @Controller('/driver')
 export class DriverController {
@@ -15,7 +21,12 @@ export class DriverController {
   })
   @Get('/get')
   getDrivers() {
-    return this.driverService.getDrivers();
+    try {
+      return this.driverService.getDrivers();
+    } catch (error) {
+      console.log('driver', '/get', error);
+      return new InternalServerErrorException('something went wrong');
+    }
   }
 
   @ApiResponse({
@@ -25,7 +36,12 @@ export class DriverController {
   })
   @Get('/get/:id')
   getDriver(@Query('id') id: number) {
-    return this.driverService.getDriver(id);
+    try {
+      return this.driverService.getDriver(id);
+    } catch (error) {
+      console.log('driver', '/get/:id', error);
+      return new InternalServerErrorException('something went wrong');
+    }
   }
 
   @ApiResponse({
@@ -35,6 +51,11 @@ export class DriverController {
   })
   @Post('/add')
   addDriver(@Body() body: DriverDTO) {
-    return this.driverService.addDriver(body);
+    try {
+      return this.driverService.addDriver(body);
+    } catch (error) {
+      console.log('driver', '/add', error);
+      return new InternalServerErrorException('something went wrong');
+    }
   }
 }

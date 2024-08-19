@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { VehicleModel } from './vehicle.model';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -21,6 +21,9 @@ export class VehicleService {
       where: { vehicleId },
       relations: ['transfers'],
     });
+    if (!vehicle) {
+      return new NotFoundException('no vehicle found');
+    }
     return vehicle;
   }
 

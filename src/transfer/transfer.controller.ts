@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  InternalServerErrorException,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 import { TransferService } from './transfer.service';
 import { TransferDTO } from './dto/transfer.dto';
@@ -14,7 +21,12 @@ export class TransferController {
   })
   @Get('/get')
   getTransfers() {
-    return this.transferServie.getTransfers();
+    try {
+      return this.transferServie.getTransfers();
+    } catch (error) {
+      console.log('transfer', '/get', error);
+      return new InternalServerErrorException('something went wrong');
+    }
   }
 
   @ApiResponse({
@@ -24,7 +36,12 @@ export class TransferController {
   })
   @Get('/get/:transferId')
   getTransfer(@Query('id') id: number) {
-    return this.transferServie.getTransfer(id);
+    try {
+      return this.transferServie.getTransfer(id);
+    } catch (error) {
+      console.log('driver', '/get/:transferId', error);
+      return new InternalServerErrorException('something went wrong');
+    }
   }
 
   @ApiResponse({
@@ -34,6 +51,11 @@ export class TransferController {
   })
   @Post('/create')
   createTransfer(@Body() body: TransferDTO) {
-    return this.transferServie.createTransfer(body);
+    try {
+      return this.transferServie.createTransfer(body);
+    } catch (error) {
+      console.log('driver', '/create', error);
+      return new InternalServerErrorException('something went wrong');
+    }
   }
 }
