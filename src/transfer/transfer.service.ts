@@ -14,7 +14,7 @@ export class TransferService {
   async getTransfers() {
     return this.TransferRepo.find({
       take: 10,
-      relations: ['vehicleId', 'driverId'],
+      relations: ['vehicle_id', 'driver_id'],
     });
   }
 

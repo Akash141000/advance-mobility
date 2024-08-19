@@ -17,7 +17,10 @@ export class VehicleService {
   }
 
   async getVehicle(vehicleId: number) {
-    const vehicle = await this.VehicleRepo.findOneBy({ vehicleId });
+    const vehicle = await this.VehicleRepo.findOne({
+      where: { vehicleId },
+      relations: ['transfers'],
+    });
     return vehicle;
   }
 
